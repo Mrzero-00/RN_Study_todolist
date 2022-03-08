@@ -10,3 +10,10 @@ start : 2022.03.07
 
 1.  브라우저의 onClick이벤트와 동일한 기능을 하기위하여 여러가지 component가 존재하지만,
     그중 TouchableOpacity의 onPress이벤트를 통해 동일한 기능을 만들수 잇음
+
+    2022.03.08
+
+- 사용자로부터 입력 데이터 받기
+
+1. 문자입력 받기 브라우저의 onChange를 통한 데이터 입력과 동일하며, TextInput component를 활용함.
+2. 여러가지의 props가 존재하며, 각각의 props는 react-native 공식홈페이지에서 찾아가면서 하는것이 좋아보임.
