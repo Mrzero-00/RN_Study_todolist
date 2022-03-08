@@ -1,15 +1,86 @@
 import { StyleSheet, Text, View, TouchableOpacity , TextInput} from 'react-native';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Calendars from './components/Calendars';
 
 export default function App() {
   const [currentPage , setCurrentPage] = useState("work");
   const [inputText,setInputText] = useState(""); 
   const [todoAddState,setTodoAddState] = useState(false); 
+  const [todoList,setTodoList] = useState(
+    [{
+      id:0,
+      date:"2022-03-08",
+      todos:[
+        {
+          id:0,
+          title:"리액트네이티브 공부하기",
+          state:false
+        },
+        {
+          id:1,
+          title:"리액트네이티브 스케줄러 완성",
+          state:false
+        },
+        {
+          id:2,
+          title:"리액트네이티브 스케줄러 완성",
+          state:false
+        },
+        {
+          id:3,
+          title:"리액트네이티브 스케줄러 완성",
+          state:false
+        },
+        {
+          id:4,
+          title:"리액트네이티브 스케줄러 완성",
+          state:false
+        },
+        {
+          id:5,
+          title:"리액트네이티브 스케줄러 완성",
+          state:false
+        },
+        {
+          id:6,
+          title:"리액트네이티브 스케줄러 완성",
+          state:false
+        }
+      ]
+  },
+  {
+    id:1,
+    date:"2022-03-13",
+    todos:[
+      {
+        id:0,
+        title:"결혼식 가기",
+        state:false
+      }
+    ]
+},
+{
+  id:2,
+  date:"2022-03-10",
+  todos:[
+    {
+      id:0,
+      title:"sk 지원서 넣기",
+      state:false
+    },
+  ]
+},
+    ]
+  )
+  const [todays,setTodays] = useState("");
   const onPressLogic = (e)=>{
     setCurrentPage(e);
   }
-  const onChangeLogic = ()=>{
-    console.log(e);
+  const todoListAddLogic = ()=>{
+    setTodoList({
+
+    })
+    alert(inputText);
   }
 
   const styles = StyleSheet.create({
@@ -59,27 +130,39 @@ export default function App() {
     },
     addBtnText:{
       fontSize:36,
+    },
+    calendarStyle:{
+      flex:9
     }
   });
+  console.log(todays);
+  useEffect(()=>{
+    const today = new Date();
+    const fullYear = today.getFullYear();
+    const month = today.getMonth()+1 <10 ? `0${today.getMonth()+1}`:today.getMonth()+1;
+    const date = today.getDate()<10 ? `0${today.getDate()}`:today.getDate();
+    setTodays(`${fullYear}-${month}-${date}`);
+  },[])
   return (
     <View style={styles.container}>
       <View style={styles.btnContainer}>
         <TouchableOpacity onPress={()=>{onPressLogic("work")}}>
           <Text style={styles.btnText}>work</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{onPressLogic("joy")}}>
-          <Text style={styles.btnText}>joy</Text>
+        <TouchableOpacity onPress={()=>{onPressLogic("calendar")}}>
+          <Text style={styles.btnText}>calendar</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.pageTitleContainer}>
+      {currentPage==="work"&&<View style={styles.pageTitleContainer}>
         <Text style={styles.pageTitleText}>{currentPage}</Text>
         {todoAddState&&<TextInput 
+          onSubmitEditing={todoListAddLogic}
           style={styles.inputText} 
           onChangeText={setInputText} 
           value={inputText}>
         </TextInput>}
-      </View>
-      <View style={styles.addBtnContainer}>
+      </View>}
+      {currentPage==="work"&&<View style={styles.addBtnContainer}>
         <TouchableOpacity 
           style={styles.addBtn}
           onPress={()=>{
@@ -90,7 +173,12 @@ export default function App() {
            {todoAddState?"x":"+"}
           </Text>
         </TouchableOpacity>
+      </View>}
+      {currentPage==="calendar"&&
+      <View style={styles.calendarStyle}>
+        <Calendars todoList={todoList}></Calendars>
       </View>
+      }
     </View>
   );
 }
